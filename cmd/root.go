@@ -9,6 +9,7 @@ import (
 
 	"github.com/KimDaeikk/filmountain-sdk/config"
 	"github.com/KimDaeikk/filmountain-sdk/constants"
+	"github.com/KimDaeikk/filmountain-sdk/utils"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -31,6 +32,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	utils.GenerateSpinner()
 }
 
 func initConfig() {
@@ -84,8 +86,6 @@ func initConfig() {
 	if err != nil {
 		log.Fatalf("Failed to unmarshal config data to struct: %v", err)
 	}
-
-	fmt.Printf(config.AppConf.LotusNode.Address)
 }
 
 // viper가 기본적으로 구조체의 필드마다 값을 설정해야해서
