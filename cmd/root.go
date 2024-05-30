@@ -86,6 +86,7 @@ func initConfig() {
 	if err != nil {
 		log.Fatalf("Failed to unmarshal config data to struct: %v", err)
 	}
+
 }
 
 // viper가 기본적으로 구조체의 필드마다 값을 설정해야해서

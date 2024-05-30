@@ -10,10 +10,10 @@ import (
 )
 
 // Lotus 노드와 상호작용을 위한 연결
-func ConnectLotusClient(c *config.AppConfig) (*lotusapi.FullNodeStruct, jsonrpc.ClientCloser, error) {
-	node := &c.LotusTestNode
+func ConnectLotusClient(c config.AppConfig) (*lotusapi.FullNodeStruct, jsonrpc.ClientCloser, error) {
+	node := c.LotusTestNode
 	if !c.OnTestnet {
-		node = &c.LotusNode
+		node = c.LotusNode
 	}
 	return connectLotusClient(node.Address, node.Token)
 }

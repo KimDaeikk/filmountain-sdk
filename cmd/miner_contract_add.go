@@ -3,6 +3,8 @@ package cmd
 import (
 	"time"
 
+	"github.com/KimDaeikk/filmountain-sdk/config"
+	"github.com/KimDaeikk/filmountain-sdk/connectors"
 	"github.com/KimDaeikk/filmountain-sdk/utils"
 	"github.com/spf13/cobra"
 )
@@ -21,6 +23,8 @@ var addCmd = &cobra.Command{
 		utils.StartSpinner("test")
 		time.Sleep(1 * time.Second)
 		utils.ErrorfSpinner("fail to %s test", arg)
+		//
+		lapi, closer, err := connectors.ConnectLotusClient(config.AppConf)
 	},
 }
 
