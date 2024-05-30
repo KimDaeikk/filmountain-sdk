@@ -15,3 +15,5 @@ var DefaultAppConf = config.AppConfig{
 		Token:   "",
 	},
 }
+
+var MinerContract = 0xabcd
