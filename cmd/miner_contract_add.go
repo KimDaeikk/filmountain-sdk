@@ -59,7 +59,7 @@ var addCmd = &cobra.Command{
 		}
 
 		// TODO pendingOwnerAddress가 있을때 change-owner 명령의 동작 체크(안될 수도 있을까봐)
-		fmt.Printf("%+v", mi)
+		fmt.Printf("%+v\n", mi.SectorSize)
 		utils.SuccessSpinner("sucessfully add miner")
 	},
 }
