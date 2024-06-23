@@ -3,19 +3,20 @@ module github.com/KimDaeikk/filmountain-sdk
 go 1.22.3
 
 require (
-	github.com/ethereum/go-ethereum v1.14.3
+	github.com/ethereum/go-ethereum v1.14.5
 	github.com/filecoin-project/go-jsonrpc v0.3.2
 	github.com/filecoin-project/lotus v1.26.3
 	github.com/leaanthony/spinner v0.5.4
-	github.com/spf13/cobra v1.8.0
+	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.18.2
 )
 
 require (
+	github.com/AlecAivazis/survey/v2 v2.3.7 // indirect
 	github.com/DataDog/zstd v1.4.5 // indirect
 	github.com/GeertJohan/go.incremental v1.0.0 // indirect
 	github.com/GeertJohan/go.rice v1.0.3 // indirect
-	github.com/Microsoft/go-winio v0.6.1 // indirect
+	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/StackExchange/wmi v1.2.1 // indirect
 	github.com/akavel/rsrc v0.8.0 // indirect
 	github.com/benbjohnson/clock v1.3.5 // indirect
@@ -23,17 +24,17 @@ require (
 	github.com/bits-and-blooms/bitset v1.10.0 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/btcsuite/btcd/btcec/v2 v2.2.0 // indirect
-	github.com/cespare/xxhash/v2 v2.2.0 // indirect
+	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
 	github.com/consensys/gnark-crypto v0.12.1 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.3 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
 	github.com/crackcomm/go-gitignore v0.0.0-20231225121904-e25f5bc08668 // indirect
 	github.com/crate-crypto/go-kzg-4844 v1.0.0 // indirect
 	github.com/daaku/go.zipexe v1.0.2 // indirect
-	github.com/deckarep/golang-set/v2 v2.1.0 // indirect
+	github.com/deckarep/golang-set/v2 v2.6.0 // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.2.0 // indirect
 	github.com/ethereum/c-kzg-4844 v1.0.0 // indirect
-	github.com/fatih/color v1.15.0 // indirect
+	github.com/fatih/color v1.16.0 // indirect
 	github.com/filecoin-project/go-address v1.1.0 // indirect
 	github.com/filecoin-project/go-amt-ipld/v2 v2.1.0 // indirect
 	github.com/filecoin-project/go-amt-ipld/v3 v3.1.0 // indirect
@@ -106,6 +107,7 @@ require (
 	github.com/jbenet/goprocess v0.1.4 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/jpillora/backoff v1.0.0 // indirect
+	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.7 // indirect
 	github.com/leaanthony/synx v0.1.0 // indirect
 	github.com/leaanthony/wincursor v0.1.0 // indirect
@@ -126,6 +128,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mgutz/ansi v0.0.0-20170206155736-9520e82c474b // indirect
 	github.com/miekg/dns v1.1.58 // indirect
 	github.com/minio/blake2b-simd v0.0.0-20160723061019-3f5f724cb5b1 // indirect
 	github.com/minio/sha256-simd v1.0.1 // indirect
@@ -188,7 +191,8 @@ require (
 	golang.org/x/mod v0.17.0 // indirect
 	golang.org/x/net v0.24.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/term v0.19.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/tools v0.20.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
