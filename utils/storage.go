@@ -1,4 +1,4 @@
-package util
+package utils
 
 import (
 	"fmt"
@@ -39,7 +39,7 @@ func NewStorage(filename string, defaultMap map[string]string, writable bool) (*
 			return nil, err
 		}
 	} else {
-		// 있다면 load한 뒤 
+		// 있다면 load한 뒤
 		err := s.load()
 		if err != nil {
 			return nil, err

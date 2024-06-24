@@ -56,10 +56,29 @@ func initConfig() {
 
 	// viper의 디렉터리를 위의 cfgDir로 설정하고
 	// config파일 확장자를 yaml로 지정
-	viper.AutomaticEnv()
 	viper.AddConfigPath(config.CfgDir)
 	viper.SetConfigName("setting")
 	viper.SetConfigType("yaml")
+
+	utils.NewKeyStore(fmt.Sprintf("%s/keystore", config.CfgDir))
+
+	if err := utils.NewKeyStoreLegacy(fmt.Sprintf("%s/keys.toml", config.CfgDir)); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := utils.NewVaultStore(fmt.Sprintf("%s/vault.toml", config.CfgDir)); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := utils.NewAccountsStore(fmt.Sprintf("%s/accounts.toml", config.CfgDir)); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := utils.NewBackupsStore(fmt.Sprintf("%s/backups.toml", config.CfgDir)); err != nil {
+		log.Fatal(err)
+	}
+
+	viper.AutomaticEnv() // read in environment variables that match
 
 	// setting.yaml을 읽으려고 시도
 	err := viper.ReadInConfig()

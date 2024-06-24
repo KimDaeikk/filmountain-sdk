@@ -1,4 +1,4 @@
-package util
+package utils
 
 import (
 	"crypto/ecdsa"
@@ -17,7 +17,6 @@ type KeyType string
 const (
 	OwnerKey    KeyType = "owner"
 	OperatorKey KeyType = "operator"
-	RequestKey  KeyType = "request"
 )
 
 func DeriveAddrFromPkString(pk string) (common.Address, address.Address, error) {

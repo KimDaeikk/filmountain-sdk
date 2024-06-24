@@ -1,13 +1,13 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
-	"fmt"
+	"errors"
+	"log"
+	"os"
 
+	"github.com/KimDaeikk/filmountain-sdk/utils"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/AlecAivazis/survey/v2"
 )
@@ -16,12 +16,13 @@ import (
 var newCmd = &cobra.Command{
 	Use:   "new",
 	Short: "A brief description of your command",
-	Long: ``,
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
-		panicIfKeyExists(util.OwnerKey)
-		panicIfKeyExists(util.OperatorKey)
-		panicIfKeyExists(util.RequestKey)
+		// 키 존재여부 체크
+		panicIfKeyExists(utils.OwnerKey)
+		panicIfKeyExists(utils.OperatorKey)
 
+		// 개인키 AES 대칭키 암호화용 비밀번호 생성
 		ownerPassphrase, envSet := os.LookupEnv("FILMOUNTAIN_OWNER_PASSPHRASE")
 		if !envSet {
 			prompt := &survey.Password{
@@ -34,75 +35,70 @@ var newCmd = &cobra.Command{
 			}
 			survey.AskOne(confirmPrompt, &confirmPassphrase)
 			if ownerPassphrase != confirmPassphrase {
-				logFatal("Aborting. Passphrase confirmation did not match.")
+				log.Fatal("Aborting. Passphrase confirmation did not match.")
 			}
 		}
 
-		ks := util.KeyStore()
+		utils.StartSpinner("add miner to vault...")
+		ks := utils.KeyStore()
 
+		// 이더리움 공개키 개인키 생성
 		owner, err := ks.NewAccount(ownerPassphrase)
 		if err != nil {
-			logFatal(err)
+			log.Fatal(err)
 		}
 
-		operatorPassphrase := os.Getenv("GLIF_OPERATOR_PASSPHRASE")
+		// 환경변수가 없는 상태면 빈문자열 ""이 passphrase로 사용
+		operatorPassphrase := os.Getenv("FILMOUNTAIN_OPERATOR_PASSPHRASE")
 		operator, err := ks.NewAccount(operatorPassphrase)
 		if err != nil {
-			logFatal(err)
+			log.Fatal(err)
 		}
 
-		requester, err := ks.NewAccount("")
-		if err != nil {
-			logFatal(err)
-		}
+		// 이더리움 공개키 저장
+		as := utils.AccountsStore()
 
-		as := util.AccountsStore()
-
-		as.Set(string(util.OwnerKey), owner.Address.String())
-		as.Set(string(util.OperatorKey), operator.Address.String())
-		as.Set(string(util.RequestKey), requester.Address.String())
+		as.Set(string(utils.OwnerKey), owner.Address.String())
+		as.Set(string(utils.OperatorKey), operator.Address.String())
 
 		if err := viper.WriteConfig(); err != nil {
-			logFatal(err)
+			log.Fatal(err)
 		}
 
-		ownerAddr, ownerDelAddr, err := as.GetAddrs(string(util.OwnerKey))
+		ownerAddr, ownerDelAddr, err := as.GetAddrs(string(utils.OwnerKey))
 		if err != nil {
-			logFatal(err)
+			log.Fatal(err)
 		}
-		operatorAddr, operatorDelAddr, err := as.GetAddrs(string(util.OperatorKey))
+		operatorAddr, operatorDelAddr, err := as.GetAddrs(string(utils.OperatorKey))
 		if err != nil {
-			logFatal(err)
-		}
-		requestAddr, requestDelAddr, err := as.GetAddrs(string(util.RequestKey))
-		if err != nil {
-			logFatal(err)
+			log.Fatal(err)
 		}
 
 		log.Printf("Owner address: %s (ETH), %s (FIL)\n", ownerAddr, ownerDelAddr)
 		log.Printf("Operator address: %s (ETH), %s (FIL)\n", operatorAddr, operatorDelAddr)
-		log.Printf("Request key: %s (ETH), %s (FIL)\n", requestAddr, requestDelAddr)
 		log.Println()
-		log.Println("Please make sure to fund your Owner Address with FIL before creating an Agent")
+		log.Println("Please make sure to fund your Owner Address with FIL before creating a Vault")
 
-		bs := util.BackupsStore()
+		bs := utils.BackupsStore()
 		bs.Invalidate()
 	},
 }
 
-func panicIfKeyExists(key util.KeyType) {
-	as := util.AccountsStore()
+func panicIfKeyExists(key utils.KeyType) {
+	as := utils.AccountsStore()
+	if as == nil {
+		log.Fatal("AccountsStore is not initialized")
+	}
 	_, _, err := as.GetAddrs(string(key))
 	if err == nil {
-		logFatal("owner account already created")
+		log.Fatal("owner account already created")
 	} else {
-		var e *util.ErrKeyNotFound
+		var e *utils.ErrKeyNotFound
 		if !errors.As(err, &e) {
-			logFatal(err)
+			log.Fatal(err)
 		}
 	}
 }
-
 
 func init() {
 	walletCmd.AddCommand(newCmd)
