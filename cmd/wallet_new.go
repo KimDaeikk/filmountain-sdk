@@ -15,7 +15,7 @@ import (
 // newCmd represents the new command
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "A brief description of your command",
+	Short: "Make new wallet to control Vault contract",
 	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		// 키 존재여부 체크
@@ -39,7 +39,7 @@ var newCmd = &cobra.Command{
 			}
 		}
 
-		utils.StartSpinner("add miner to vault...")
+		utils.StartSpinner("Generate new keys...")
 		ks := utils.KeyStore()
 
 		// 이더리움 공개키 개인키 생성
@@ -73,7 +73,7 @@ var newCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
-
+		utils.SuccessSpinner("sucessfully generate new keys")
 		log.Printf("Owner address: %s (ETH), %s (FIL)\n", ownerAddr, ownerDelAddr)
 		log.Printf("Operator address: %s (ETH), %s (FIL)\n", operatorAddr, operatorDelAddr)
 		log.Println()
